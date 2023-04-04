@@ -22,22 +22,15 @@ Examinons quelques paramètres dont vous avez besoin pour créer une application
 
 > D’autres applications peuvent également être associées au même plan App Service et donc utiliser les mêmes ressources.
 
-#### Définissons quelques variables d'environnement  
+#### Créez un groupe de ressources relatif à votre application
 
-``` bash
-$RESOURCE_GROUP = "my-rg"               # nom du groupe de ressources
-$LOCATION = "francecentral"             # la region Azure où seront déployées les ressources
-$APP_NAME_1 = "phpapp156"               # nom de la web app php
-$APP_NAME_2 = "dotnetapp156"            # nom de la web app ASP.NET Core Web  
-$APP_SERVICE_PLAN = "my-asp-app"        # nom du plan App Service Linux
-$GIT_REPO = "https://github.com/Azure-Samples/php-docs-hello-world"
-```
-
-#### Avec ces variables, créez un groupe de ressources relatif à votre application
+N’oubliez pas que la convention de nommage pour le groupes de ressources sera la suivante: `rg-<environment>-<region>-<application-name>-<owner>-<instance>`
 
 {% collapsible %}
 
 ```bash
+RESOURCE_GROUP="<your-resource-group-name>"
+LOCATION="<your-region>"
 az group create --name $RESOURCE_GROUP --location "$LOCATION"
 ```
 
@@ -45,11 +38,14 @@ az group create --name $RESOURCE_GROUP --location "$LOCATION"
 
 #### Créez un [plan AppService Linux](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans) avec un tier Standard
 
+N’oubliez pas que la convention de nommage pour le plan App Service sera la suivante: `aps-<environment>-<region>-<application-name>-<owner>-<instance>`
+
 Solution :
 
 {% collapsible %}
 
 ```bash
+$APP_SERVICE_PLAN = "<your-app-service-plan-name>"
 # Créez un plan App Service Standard avec 4 instances de machine Linux
 az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --number-of-workers 4 --sku S1
 ```
@@ -82,18 +78,15 @@ Solution :
 
 {% collapsible %}
 
-- via CLI
+N’oubliez pas que la convention de nommage pour la web app sera la suivante: `app-<environment>-<region>-<application-name>-<app-suffix><owner>-<instance>`
 
 ```bash
+APP_NAME_1="<your-app-service-name>"
 # Obtenez la liste des runtimes supportés pour chaque OS
 az webapp list-runtimes
 # Créez la web app
 az webapp create -g $RESOURCE_GROUP -n $APP_NAME_1 -p  $APP_SERVICE_PLAN -r "PHP:8.0" 
 ```
-
-- via le Portail
-  
-![Web app 2 creation](/media/lab1/web-app-2.png)
 
 {% endcollapsible %}
 
@@ -106,6 +99,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME_1 -p  $APP_SERVICE_PLAN -r "PHP
 #### Exécutez la commande suivante pour déployer manuellement le code de l'application php depuis le repo Github
 
 ```bash
+$GIT_REPO = "https://github.com/Azure-Samples/php-docs-hello-world"
 az webapp deployment source config --name $APP_NAME_1 --resource-group $RESOURCE_GROUP `
 --repo-url $GIT_REPO --branch master --manual-integration
 ```
