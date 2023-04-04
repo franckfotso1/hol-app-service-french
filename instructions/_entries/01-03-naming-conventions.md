@@ -22,7 +22,7 @@ Nous utiliserons donc cette convention:
 <service-prefix><environment><region><application-name><owner><instance>
 ```
 
-> Assurez-vous d’utiliser vos propres valeurs pour avoir des noms uniques ou utilisez votre propre convention.<br><br>
+> Assurez-vous d’utiliser vos propres valeurs pour avoir des noms uniques ou utilisez votre propre convention.<br>
 > [Official resource abbreviations][az-abrevation]
 
 Maintenant que tout est prêt, commençons le lab!
