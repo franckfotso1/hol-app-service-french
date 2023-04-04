@@ -5,22 +5,15 @@ title: Convention de nommage
 parent-id: intro
 ---
 
-Avant de commencer à déployer des services Azure, il est important de suivre une convention de nommage. Un nom adapté vous aide à identifier rapidement le type de la ressource, la charge de travail associée, l’environnement et la région Azure qui l’héberge. Sur la base de la [documentation][az-naming-convention] officielle, nous devons définir quelques composants:
+Avant de commencer à déployer des services Azure, il est important de suivre une convention de nommage. Un nom adapté vous aide à identifier rapidement le type de la ressource, la charge de travail associée, l’environnement et la région Azure qui l’héberge. Sur la base de la [documentation][az-naming-convention] officielle, nous allons définir quelques composants:
 
-- The application name
-- The environment
-- The region
-- The instance number
+- Le nom d'application: `hol` (pour Hands On Lab)
+- Le type d'environnement: `dev`
+- La région Azure: `we`
+- Le nombre d'instances d'une ressource spécifique: `01`
+- Le nom de l'organisation: `ms`
 
-We will also add an owner property, so for the purpose of this lab the values will be:
-
-- The application name: `hol` (for Hands On Lab)
-- The environment: `dev`
-- The region: `we`
-- The instance: `01`
-- The owner: `ms`
-
-So we will use this convention:
+Nous utiliserons donc cette convention:
 
 ```xml
 <!--If the resource prefix has a dash: -->
@@ -29,7 +22,7 @@ So we will use this convention:
 <service-prefix><environment><region><application-name><owner><instance>
 ```
 
-> Be sure to use your own value to have unique names or use your own convention.<br>
+> Assurez-vous d’utiliser vos propres valeur pour avoir des noms uniques ou utilisez votre propre convention.<br>
 > [Official resource abbreviations][az-abrevation]
 
 With everything ready let's start the lab!
