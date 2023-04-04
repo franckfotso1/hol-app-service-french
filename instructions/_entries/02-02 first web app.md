@@ -49,7 +49,6 @@ az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --n
 ```
 
 {% endcollapsible %}
-<br>
 
 > le tier d'un plan App Service détermine les fonctionnalités App Service que vous obtenez et combien vous payez pour le plan.
 
@@ -92,7 +91,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "PHP:8
 ![App UI default](/media/lab1/php_app_quick.png)
 {% endcollapsible %}
 
-#### [déployez manuellement le code de l'application php depuis le repo Github](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github)
+#### [déployez](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github) manuellement le code de l'application php depuis le repo Github
 
 {% collapsible %}
 
@@ -189,5 +188,5 @@ az group delete -n $RESOURCE_GROUP
 ```
 
 {% endcollapsible %}
-<br>
+
 > Une bonne pratique consiste notamment à automatiser le provisionement de son infrastructure à laide doutils Iac comme [Bicep](https://learn.microsoft.com/fr-fr/azure/app-service/provision-resource-bicep) ou [Terraform](https://learn.microsoft.com/fr-fr/azure/app-service/provision-resource-terraform).

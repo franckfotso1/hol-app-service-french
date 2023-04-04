@@ -79,15 +79,17 @@ Nous allons :
 - Configurer la ToDo App avec Azure Monitor et envoyer des journaux de console à Log Analytics.
 - Utiliser des requêtes de journal pour identifier et résoudre les erreurs de l'application web
 
-##### Creez un espace de travail Log Analytics
+##### Creez un workspace Log Analytics
 
-> Azure Monitor stocke les données de journal dans un espace de travail Log Analytics. Un espace de travail est un conteneur qui renferme des données ainsi que des informations de configuration.
+> Azure Monitor stocke les données de journal dans un workspace Log Analytics. Un workspace est un conteneur qui renferme des données ainsi que des informations de configuration.
+
+La convention de nommage pour le workspace sera la suivante: `log-<environment>-<region>-<application-name>-<owner>-<instance>`
 
 {% collapsible %}
 
 ```bash
 # nom de l'espace de travail Log Analytics
-$APP_WORKSPACE = "my-log-workspace"  
+APP_WORKSPACE="<your-log-analytics-workspace-name>" 
 # Créez le workspace
 az monitor log-analytics workspace create -g $RESOURCE_GROUP --workspace-name $APP_WORKSPACE
 ```

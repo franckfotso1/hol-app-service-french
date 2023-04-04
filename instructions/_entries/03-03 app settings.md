@@ -49,7 +49,7 @@ Solution :
 ```bash
 az webapp config appsettings set --name $APP_NAME `
 --resource-group $RESOURCE_GROUP `
---settings DATABASE_URL = $primaryConnectionString DATABASE_NAME=$APP_DATABASE
+--settings DATABASE_URL = $primaryConnectionString DATABASE_NAME = $DATABASE_NAME
 ```
 
 - via le Portail
@@ -63,8 +63,16 @@ az webapp config appsettings set --name $APP_NAME `
 Outre les paramètres d'application, App Service fournit d'autres paramètres tels que :
 
 ```bash
-az webapp config set --resource-group <group-name> --name <app-name> --use-32bit-worker-process [true|false] --web-sockets-enabled [true|false] --always-on [true|false]--http20-enabled --auto-heal-enabled [true|false] --remote-debugging-enabled [true|false] --number-of-workers
-# ARR affinity, SDK version, Command start, etc ...
+az webapp config set --resource-group <group-name> `
+ --name <app-name> `
+ --use-32bit-worker-process [true|false] `
+ --web-sockets-enabled [true|false] `
+ --always-on [true|false]`
+ --http20-enabled`
+ --auto-heal-enabled [true|false] `
+ --remote-debugging-enabled [true|false] `
+ --number-of-workers 
+ # ARR affinity, SDK version, Command start, etc ...
 ```
 
 > **always-on** : Garde l'application chargée même s’il n'y a aucun trafic.Par défaut, l’application est déchargée après 20 minutes sans requêtes entrantes. Cela peut provoquer une latence élevée pour les nouvelles requêtes en raison de son temps de préparation. Lorsque l’option Always on est activée, l’équilibreur de charge frontal envoie une requête GET à la racine de l’application toutes les cinq minutes. La commande ping continue empêche le déchargement de l’application. Cette option peut etre utile pour les WebJobs continus.<br>
