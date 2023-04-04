@@ -52,8 +52,11 @@ az appservice plan update --number-of-workers 3 --name $APP_SERVICE_PLAN --resou
 - Utilisez Azure PowerShell pour démarrer une boucle infinie qui envoie les requêtes HTTP à votre application Web.
   
 ```bash
-$webapp = Get-AzWebApp -ResourceGroupName $RESOURCE_GROUP
-while ($true) { Invoke-WebRequest -Uri $webapp.DefaultHostName }
+$webapp= az webapp show --name $APP_NAME --resource-group $RESOURCE_GROUP --query defaultHostName -o tsv
+while true
+do
+  curl https://$webapp
+done
 ```
 
 - Vérifiez bien que le nombre d'instances évolue automatiquement

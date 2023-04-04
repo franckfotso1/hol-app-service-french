@@ -5,7 +5,7 @@ title: Creation ressources
 parent-id: lab-2
 ---
 
-- Téléchargez et forkez les sources du projet [ici](https://github.com/Azure-Samples/msdocs-nodejs-mongodb-azure-sample-app)
+- Fork puis Clone les sources du projet [ici](https://github.com/Azure-Samples/msdocs-nodejs-mongodb-azure-sample-app)
   
 #### Définissons quelques variables d'environnement  
 

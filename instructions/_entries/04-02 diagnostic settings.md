@@ -14,7 +14,7 @@ Cette fonctionnalité est particulièrement utile quand vous rencontrez des prob
 
 {% collapsible %}
 
-- La zone de recherche Genie permet de rapidement trouver un diagnostic. Par exemple si mon application est lent, je search **"Web App Slow"**. Le même diagnostic est disponible dans les catégories Availability & Performance.
+- La zone de recherche Genie permet de rapidement trouver un diagnostic. Par exemple si mon application est lent, je cherche **"Web App Slow"**. Le même diagnostic est disponible dans les catégories Availability & Performance.
   
 ![Ask Genie](/media/lab3/ask_genie.png)
 ![Ask Genie diagnostic](/media/lab3/genie_diagnostic.png)
@@ -110,9 +110,9 @@ $resourceID = (az webapp show -g $RESOURCE_GROUP -n $APP_NAME --query id --outpu
 # Récupérez l'ID du workspace Log Analytics
 $workspaceID = (az monitor log-analytics workspace show -g $RESOURCE_GROUP  --workspace-name $APP_WORKSPACE --query id --output tsv)
 # Créez un diagnostic settings
-az monitor diagnostic-settings create --resource $resourceID \
- --workspace $workspaceID \
- -n my-app-logs \
+az monitor diagnostic-settings create --resource $resourceID `
+ --workspace $workspaceID `
+ -n my-app-logs `
  --logs '[{"category": "AppServiceConsoleLogs", "enabled": true},
   {"category": "AppServiceHTTPLogs", "enabled": true}]'
 ```

@@ -10,27 +10,17 @@ parent-id: intro
 Ce workshop va demander les éléments suivants:
 
 - une souscription Azure
-- Azure CLI (**>= 2.30**)
+- Azure CLI
 - [VS Code](https://code.visualstudio.com/) ou équivalent
+- [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/)
 - [un compte Github](https://github.com/join)
+- [Node 18](https://nodejs.org/en/download) & [PHP 8.0](https://www.php.net/downloads.php)(optional)
 
 ### Installer Azure CLI
 
 #### Si CLI non installée : Installer le CLI
 
-Suivez [ce lien](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli) et suivez l'onglet correspondant à votre système d'exploitation.
-
-#### Si CLI installée : Upgrade sa version du CLI
-
-{% collapsible %}
-
-```bash
-az version
-# Si version az-core <= 2.30
-az upgrade
-```
-
-{% endcollapsible %}
+Suivez [ce lien](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli) et l'onglet correspondant à votre système d'exploitation.
 
 #### Se connecter à sa souscription
 

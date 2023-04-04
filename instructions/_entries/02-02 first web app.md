@@ -106,7 +106,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME_1 -p  $APP_SERVICE_PLAN -r "PHP
 #### Exécutez la commande suivante pour déployer manuellement le code de l'application php depuis le repo Github
 
 ```bash
-az webapp deployment source config --name $APP_NAME_1 --resource-group $RESOURCE_GROUP \
+az webapp deployment source config --name $APP_NAME_1 --resource-group $RESOURCE_GROUP `
 --repo-url $GIT_REPO --branch master --manual-integration
 ```
 

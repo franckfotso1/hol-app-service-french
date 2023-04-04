@@ -47,8 +47,8 @@ Solution :
 - via CLI
   
 ```bash
-az webapp config appsettings set --name $APP_NAME \
---resource-group $RESOURCE_GROUP \
+az webapp config appsettings set --name $APP_NAME `
+--resource-group $RESOURCE_GROUP `
 --settings DATABASE_URL = $primaryConnectionString DATABASE_NAME=$APP_DATABASE
 ```
 
