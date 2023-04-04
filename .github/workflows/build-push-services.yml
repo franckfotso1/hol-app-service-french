@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - master
+name:  update staging guide
+
+jobs:
+
+  update-staging-guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.6"
+
+      - run: gem update --system
+
+      - run: gem install jekyll
+
+      - run: jekyll build --trace
+        working-directory: ./instructions
+
+      - uses: tibor19/static-website-deploy@v1
+        with:
+          enabled-static-website: "true"
+          folder: "instructions/_site"
+          connection-string: ${{ secrets.STATIC_WEBSITE_CONNECTION_STRING }}
