@@ -51,6 +51,7 @@ az appservice plan update --number-of-workers 3 --name $APP_SERVICE_PLAN --resou
   
 ```bash
 $webapp= az webapp show --name $APP_NAME --resource-group $RESOURCE_GROUP --query defaultHostName -o tsv
+
 while true
 do
   curl https://$webapp
