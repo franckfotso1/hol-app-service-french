@@ -69,7 +69,7 @@ php -S localhost:8080
 curl http://localhost:8080
 ```
 
-#### Créez une [Web App](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github)sur ce plan App Service Linux en spécifiant le runtime PHP
+#### Créez une [Web App](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github)sur ce plan App Service Linux en spécifiant le runtime PHP 8.0
 
 N’oubliez pas que la convention de nommage pour la web app sera la suivante: `app-<environment>-<region>-<application-name>-<app-suffix><owner>-<instance>`
 
@@ -91,7 +91,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "PHP:8
 ![App UI default](/media/lab1/php_app_quick.png)
 {% endcollapsible %}
 
-#### [déployez](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github) manuellement le code de l'application php depuis le repo Github
+#### [Déployez](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github) manuellement le code de l'application php depuis le repo Github
 
 {% collapsible %}
 
