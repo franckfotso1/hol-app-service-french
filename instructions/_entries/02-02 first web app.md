@@ -22,7 +22,7 @@ Examinons quelques paramètres dont vous avez besoin pour créer une application
 
 > D’autres applications peuvent également être associées au même plan App Service et donc utiliser les mêmes ressources.
 
-#### Créez un groupe de ressources relatif à votre application
+#### Créez un [groupe de ressources](https://learn.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-cli) relatif à votre application
 
 N’oubliez pas que la convention de nommage pour le groupes de ressources sera la suivante: `rg-<environment>-<region>-<application-name>-<owner>-<instance>`
 
@@ -40,8 +40,6 @@ az group create --name $RESOURCE_GROUP --location "$LOCATION"
 
 N’oubliez pas que la convention de nommage pour le plan App Service sera la suivante: `aps-<environment>-<region>-<application-name>-<owner>-<instance>`
 
-Solution :
-
 {% collapsible %}
 
 ```bash
@@ -51,8 +49,8 @@ az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --n
 ```
 
 {% endcollapsible %}
+<br>
 
----
 > le tier d'un plan App Service détermine les fonctionnalités App Service que vous obtenez et combien vous payez pour le plan.
 
 {% collapsible %}
@@ -72,20 +70,18 @@ php -S localhost:8080
 curl http://localhost:8080
 ```
 
-#### Créez une Web App sur ce plan App Service Linux en spécifiant le runtime PHP
-
-Solution :
-
-{% collapsible %}
+#### Créez une [Web App](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github)sur ce plan App Service Linux en spécifiant le runtime PHP
 
 N’oubliez pas que la convention de nommage pour la web app sera la suivante: `app-<environment>-<region>-<application-name>-<app-suffix><owner>-<instance>`
 
+{% collapsible %}
+
 ```bash
-APP_NAME_1="<your-app-service-name>"
+APP_NAME="<your-php-web-app-name>"
 # Obtenez la liste des runtimes supportés pour chaque OS
 az webapp list-runtimes
 # Créez la web app
-az webapp create -g $RESOURCE_GROUP -n $APP_NAME_1 -p  $APP_SERVICE_PLAN -r "PHP:8.0" 
+az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "PHP:8.0" 
 ```
 
 {% endcollapsible %}
@@ -96,18 +92,22 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME_1 -p  $APP_SERVICE_PLAN -r "PHP
 ![App UI default](/media/lab1/php_app_quick.png)
 {% endcollapsible %}
 
-#### Exécutez la commande suivante pour déployer manuellement le code de l'application php depuis le repo Github
+#### [déployez manuellement le code de l'application php depuis le repo Github](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github)
+
+{% collapsible %}
 
 ```bash
 $GIT_REPO = "https://github.com/Azure-Samples/php-docs-hello-world"
-az webapp deployment source config --name $APP_NAME_1 --resource-group $RESOURCE_GROUP `
+az webapp deployment source config --name $APP_NAME --resource-group $RESOURCE_GROUP `
 --repo-url $GIT_REPO --branch master --manual-integration
 ```
+
+{% endcollapsible %}
 
 Une fois le déploiment effectué, Sélectionnez **Accéder à la ressource**. Pour avoir un apercu de l'application web, cliquez sur l'URL en haut à droite du portail ou celui renvoyé par la commande suivante :
 
 ```bash
-az webapp show -n $APP_NAME_1 -g $RESOURCE_GROUP --query "defaultHostName"
+az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
 ```
 
 {% collapsible %}
@@ -189,7 +189,5 @@ az group delete -n $RESOURCE_GROUP
 ```
 
 {% endcollapsible %}
-
----
-
+<br>
 > Une bonne pratique consiste notamment à automatiser le provisionement de son infrastructure à laide doutils Iac comme [Bicep](https://learn.microsoft.com/fr-fr/azure/app-service/provision-resource-bicep) ou [Terraform](https://learn.microsoft.com/fr-fr/azure/app-service/provision-resource-terraform).
