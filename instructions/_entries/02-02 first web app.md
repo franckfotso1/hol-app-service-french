@@ -43,7 +43,7 @@ N’oubliez pas que la convention de nommage pour le plan App Service sera la su
 {% collapsible %}
 
 ```bash
-$APP_SERVICE_PLAN = "<your-app-service-plan-name>"
+APP_SERVICE_PLAN="<your-app-service-plan-name>"
 # Créez un plan App Service Standard avec 4 instances de machine Linux
 az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --number-of-workers 4 --sku S1
 ```
@@ -96,7 +96,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "PHP:8
 {% collapsible %}
 
 ```bash
-$GIT_REPO = "https://github.com/Azure-Samples/php-docs-hello-world"
+GIT_REPO="https://github.com/Azure-Samples/php-docs-hello-world"
 az webapp deployment source config --name $APP_NAME --resource-group $RESOURCE_GROUP `
 --repo-url $GIT_REPO --branch master --manual-integration
 ```
