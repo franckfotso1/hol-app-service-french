@@ -6,11 +6,6 @@ parent-id: lab-4
 ---
 
 
-vous allez configurer une application App Service avec une communication sécurisée, isolée du réseau, aux services principaux. Lorsque vous avez terminé, vous disposerez d’une application App Service qui accède à la fois à Key Vault et à Cognitive Services via un réseau virtuel Azure, et aucun autre trafic n’est autorisé à accéder à ces ressources principales. Tout le trafic sera isolé au sein de votre réseau virtuel à l'aide de l’intégration du réseau virtuel et de points de terminaison privés.
-
-Pour le moment, les secrets de connexion sont stockés sous forme de paramètres d’application dans l’application App Service. Cette approche sécurise déjà les secrets de connexion du codebase de votre application. Toutefois, un contributeur autorisé à gérer votre application peut également voir les paramètres de l’application. Au cours de cette étape, vous allez déplacer les secrets de connexion dans un coffre de clés et verrouiller l’accès afin d’être la seule personne à pouvoir le gérer. Seule l’application App Service pourra le lire à l’aide de son identité managée.
-À présent, définissez les paramètres d’application comme références du coffre de clés.
-
 #### Créez un [groupe de ressources](https://learn.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-cli) relatif à votre application
 
 {% collapsible %}
@@ -64,7 +59,7 @@ az cognitiveservices account create -g $RESOURCE_GROUP -n $CS_ACCOUNT_NAME -l "$
 
 {% endcollapsible %}
 
-#### Créez le key Vault qui contiendra les secrets de notre app
+#### Créez le [key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-cli) qui contiendra les secrets de notre app
 
 {% collapsible %}
 
@@ -75,7 +70,7 @@ az keyvault create -g $RESOURCE_GROUP -n $VAULT_NAME -l "$LOCATION" --sku standa
 
 {% endcollapsible %}
 
-#### Sécurisez le key Vault et donnez-vous le rôle RBAC `Key Vault Secrets Officer`
+#### Donnez-vous le rôle RBAC `Key Vault Secrets Officer` sur le Key Vault
 
 {% collapsible %}
 
@@ -88,7 +83,7 @@ az role assignment create --role "Key Vault Secrets Officer" --assignee-object-i
 
 {% endcollapsible %}
 
-#### Activez l’identité managée affectée par le système de votre application et donnez-lui le rôle RBAC `Key Vault Secrets User`
+#### Affectez l’identité managée d'Azure Active Directory à votre application et donnez-lui le rôle RBAC `Key Vault Secrets User`
 
 {% collapsible %}
 
@@ -129,11 +124,11 @@ az webapp config appsettings set -g $RESOURCE_GROUP - $APP_NAME --settings CS_AC
 
 {% endcollapsible %}
 
-> Votre application se connecte maintenant à Cognitive Services avec des secrets conservés dans votre coffre de clés, sans aucune modification du code
+> Votre application se connecte maintenant à Cognitive Services avec des secrets conservés dans votre Key Vault, sans aucune modification du code.
 
-A présent isolons le traffic réseau pour que la Web App accède à d'autres services via un réseau virtuel.
+A présent isolons le trafic pour que la Web App accède à d'autres services via un réseau virtuel.
 
-#### Créez un réseau virtuel
+#### Créez un réseau virtuel (VNet)
 
 {% collapsible %}
 
@@ -144,7 +139,7 @@ az network vnet create -g $RESOURCE_GROUP -l "$LOCATION" --name $VNET_NAME --add
 
 {% endcollapsible %}
 
-#### Créez un sous-réseau pour l’intégration de réseau virtuel App Service
+#### Créez un sous-réseau (Subnet) pour l’intégration VNet à App Service
 
 {% collapsible %}
 
@@ -155,7 +150,7 @@ az network vnet subnet create -g $RESOURCE_GROUP --vnet-name $VNET_NAME --name v
 
 {% endcollapsible %}
 
-#### Créez un autre sous-réseau pour les points de terminaison privés.
+#### Créez un autre sous-réseau (Subnet) pour les [private endpoints](https://learn.microsoft.com/fr-fr/azure/private-link/private-endpoint-overview)
 
 {% collapsible %}
 
@@ -166,7 +161,7 @@ az network vnet subnet create -g $RESOURCE_GROUP --vnet-name $VNET_NAME --name p
 
 {% endcollapsible %}
 
-#### Créez deux zones DNS privées, une pour votre ressource Cognitive Services et une pour votre coffre de clés
+#### Créez deux zones DNS privées, une pour votre ressource Cognitive Services et une pour le Key Vault
 
 {% collapsible %}
 
@@ -177,7 +172,7 @@ az network private-dns zone create -g $RESOURCE_GROUP --name privatelink.vaultco
 
 {% endcollapsible %}
 
-#### Liez les zones DNS privées au réseau virtuel
+#### Liez les zones DNS privées au VNet
 
 {% collapsible %}
 
@@ -191,7 +186,7 @@ az network private-dns link vnet create -g $RESOURCE_GROUP --name vaultcore-zone
 
 #### Créer des points de terminaison privés
 
-##### Dans le sous-réseau de terminaux privés de votre réseau virtuel, créez un terminal privé pour votre Cognitive Service.
+##### Créez un [private endpoint](https://learn.microsoft.com/en-us/cli/azure/network/private-endpoint?view=azure-cli-latest) pour votre Cognitive Service dans le subnet correspondant
 
 {% collapsible %}
 
@@ -257,7 +252,7 @@ az webapp config appsettings set -g $RESOURCE_GROUP --name $APP_NAME --settings 
 
 > Vous ne pouvez plus charger l’application, car elle ne peut plus accéder aux références du coffre de clés. L’application a perdu sa connectivité au coffre de clés par le biais de la mise en réseau partagée
 
-#### Activez l’intégration du réseau virtuel sur votre application
+#### Activez l’intégration du VNet à votre application
 
 {% collapsible %}
 
@@ -269,4 +264,4 @@ az webapp update -g $RESOURCE_GROUP --name $APP_NAME --https-only
 
 {% endcollapsible %}
 
-> L’intégration du réseau virtuel permet au trafic sortant de circuler directement dans le réseau virtuel
+> Cet intégration permet au trafic sortant de circuler directement dans le VNet

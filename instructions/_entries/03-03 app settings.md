@@ -33,7 +33,7 @@ npm start
 
 ```bash
 # Récupérez la 'chaîne de connexion' de votre base de données Mongo
-az cosmosdb list-connection-strings -n $COSMOSDB_ACCOUNT -g $RESOURCE_GROUP
+az cosmosdb keys list -g $RESOURCE_GROUP -n $COSMOSDB_ACCOUNT --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" -o tsv
 ```
 
 > Cette commande renverra un objet JSON contenant la chaîne de connexion de votre compte Cosmos DB. Copiez la valeur de la propriété **primaryConnectionString**
@@ -55,8 +55,11 @@ az webapp config appsettings set --name $APP_NAME `
 - via le Portail
 
 ![Web App connection string](/media/lab2/app_settings.png)
-> Pensez à enregistrer ses modifications
+> Pensez à enregistrer les modifications
+
 {% endcollapsible %}
+
+> Pour le moment, les secrets de connexion sont stockés sous forme de paramètres d’application dans l’application App Service. Cette approche sécurise déjà les secrets de connexion du codebase de votre application. Toutefois, un contributeur autorisé à gérer votre application peut également voir les paramètres de l’application. Lors du lab4, vous allez déplacer les secrets de connexion dans Key Vault et verrouiller l’accès afin d’être la seule personne à pouvoir le gérer. Seule l’application App Service pourra le lire à l’aide de son identité managée.
 
 #### paramères généraux
 
