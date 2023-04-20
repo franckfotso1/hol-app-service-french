@@ -10,7 +10,7 @@ Le nom de domaine par défaut fourni avec votre application <app-name>.azurewebs
 
 Le nom <app-name>.azurewebsites.net est déjà sécurisé par un certificat générique pour toutes les applications App Service, mais votre domaine personnalisé doit être sécurisé par TLS avec un certificat distinct.
 
-#### Ajouter un custom domain
+#### Ajouter un nom de domaine personnalisé
 
 {% collapsible %}
 ![custom domain](/media/lab3/custom_domain.png)
@@ -19,4 +19,7 @@ Le nom <app-name>.azurewebsites.net est déjà sécurisé par un certificat gén
 
 #### Ajouter un certificat
 
+{% collapsible %}
 ![ssl certificate](/media/lab3/ssl_certificate.png)
+![custom domain working](/media/lab3/custom_domain_working.png)
+{% endcollapsible %}
