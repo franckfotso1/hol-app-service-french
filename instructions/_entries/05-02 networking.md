@@ -6,126 +6,6 @@ parent-id: lab-4
 ---
 
 
-#### Créez un [groupe de ressources](https://learn.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-cli) relatif à votre application
-
-{% collapsible %}
-
-```bash
-RESOURCE_GROUP="<your-resource-group-name>"
-LOCATION="<your-region>"
-az group create --name $RESOURCE_GROUP --location "$LOCATION"
-```
-
-{% endcollapsible %}
-
-#### déployez cette application .NET 7 sur un plan App Service Windows Standard
-
-{% collapsible %}
-
-```bash
-APP_SERVICE_PLAN="<your-app-service-plan-name>"
-# Créez un plan App Service Standard avec 4 instances de machine Windows
-az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --number-of-workers 4 --sku S1
-```
-
-```bash
-APP_NAME="<your-dotnet-web-app-name>"
-# Obtenez la liste des runtimes supportés pour chaque OS
-az webapp list-runtimes
-# Créez la web app
-az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "dotnet:7" 
-```
-
-```bash
-GIT_REPO="https://github.com/Azure-Samples/app-service-language-detector.git"
-az webapp deployment source config --name $APP_NAME --resource-group $RESOURCE_GROUP `
---repo-url $GIT_REPO --branch master --manual-integration
-```
-
-```bash
-az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
-```
-
-{% endcollapsible %}
-
-#### Créez une ressource Cognitive Services
-
-{% collapsible %}
-
-```bash
-CS_ACCOUNT_NAME="<your-cognitive-services-account-name>"
-az cognitiveservices account create -g $RESOURCE_GROUP -n $CS_ACCOUNT_NAME -l "$LOCATION" --kind TextAnalytics --sku F0 --custom-domain $CS_ACCOUNT_NAME
-```
-
-{% endcollapsible %}
-
-#### Créez le [key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-cli) qui contiendra les secrets de notre app
-
-{% collapsible %}
-
-```bash
-VAULT_NAME="<vault-name>"
-az keyvault create -g $RESOURCE_GROUP -n $VAULT_NAME -l "$LOCATION" --sku standard --enable-rbac-authorization
-```
-
-{% endcollapsible %}
-
-#### Donnez-vous le rôle RBAC `Key Vault Secrets Officer` sur le Key Vault
-
-{% collapsible %}
-
-```bash
-VAULT_ID=$(az keyvault show --name $VAULT_NAME --query id --output tsv)
-MY_ID=$(az ad signed-in-user show --query id --output tsv)
-
-az role assignment create --role "Key Vault Secrets Officer" --assignee-object-id $MY_ID --assignee-principal-type User --scope $VAULT_ID
-```
-
-{% endcollapsible %}
-
-#### Affectez l’identité managée d'Azure Active Directory à votre application et donnez-lui le rôle RBAC `Key Vault Secrets User`
-
-{% collapsible %}
-
-```bash
-az webapp identity assign -g $RESOURCE_GROUP -n $APP_NAME --scope $VAULT_ID --role  "Key Vault Secrets User"
-```
-
-{% endcollapsible %}
-
-#### Récupérez la clé d'abonnement de Cognitive Services
-
-{% collapsible %}
-
-```bash
-$CS_ACCOUNT_KEY = az cognitiveservices account keys list -g $RESOURCE_GROUP -n $CS_ACCOUNT_NAME --query key1 --output tsv
-```
-
-{% endcollapsible %}
-
-#### Ajoutez le nom de la ressource Cognitive Services et la clé d’abonnement aux secrets du coffre, puis enregistrez leur ID comme variables d’environnement pour l’étape suivante
-
-{% collapsible %}
-
-```bash
-$CS_NAME_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_name --value $CS_ACCOUNT_NAME --query id --output tsv
-$CS_KEY_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_key --value $CS_ACCOUNT_KEY --query id --output tsv
-```
-
-{% endcollapsible %}
-
-#### Enfin, définir les secrets sous la forme des paramètres d’application et les valeurs comme références  au keyVault
-
-{% collapsible %}
-
-```bash
-az webapp config appsettings set -g $RESOURCE_GROUP - $APP_NAME --settings CS_ACCOUNT_NAME="@Microsoft.KeyVault(SecretUri=$CS_NAME_KVUri)" CS_ACCOUNT_KEY="@Microsoft.KeyVault(SecretUri=$CS_KEY_KVUri)"
-```
-
-{% endcollapsible %}
-
-> Votre application se connecte maintenant à Cognitive Services avec des secrets conservés dans votre Key Vault, sans aucune modification du code.
-
 A présent isolons le trafic pour que la Web App accède à d'autres services via un réseau virtuel.
 
 #### Créez un réseau virtuel (VNet)
@@ -145,7 +25,7 @@ az network vnet create -g $RESOURCE_GROUP -l "$LOCATION" --name $VNET_NAME --add
 
 ```bash
 VNET_NAME="<virtual-network-name>"
-az network vnet subnet create -g $RESOURCE_GROUP --vnet-name $VNET_NAME --name vnet-integration-subnet --address-prefixes 10.0.0.0/24 --delegations Microsoft.Web/serverfarms --disable-private-endpoint-network-policies false
+az network vnet subnet create -g $RESOURCE_GROUP --vnet-name $VNET_NAME --name vnet-integration-subnet --address-prefixes 10.0.0.0/24 --delegations Microsoft.Web/serverfarms
 ```
 
 {% endcollapsible %}
@@ -265,3 +145,72 @@ az webapp update -g $RESOURCE_GROUP --name $APP_NAME --https-only
 {% endcollapsible %}
 
 > Cet intégration permet au trafic sortant de circuler directement dans le VNet
+
+-------------------------------
+
+#### Créez le [key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-cli) qui contiendra les secrets de notre app
+
+{% collapsible %}
+
+```bash
+VAULT_NAME="<vault-name>"
+az keyvault create -g $RESOURCE_GROUP -n $VAULT_NAME -l "$LOCATION" --sku standard --enable-rbac-authorization
+```
+
+{% endcollapsible %}
+
+#### Donnez-vous le rôle RBAC `Key Vault Secrets Officer` sur le Key Vault
+
+{% collapsible %}
+
+```bash
+VAULT_ID=$(az keyvault show --name $VAULT_NAME --query id --output tsv)
+MY_ID=$(az ad signed-in-user show --query id --output tsv)
+
+az role assignment create --role "Key Vault Secrets Officer" --assignee-object-id $MY_ID --assignee-principal-type User --scope $VAULT_ID
+```
+
+{% endcollapsible %}
+
+#### Affectez l’identité managée d'Azure Active Directory à votre application et donnez-lui le rôle RBAC `Key Vault Secrets User`
+
+{% collapsible %}
+
+```bash
+az webapp identity assign -g $RESOURCE_GROUP -n $APP_NAME --scope $VAULT_ID --role  "Key Vault Secrets User"
+```
+
+{% endcollapsible %}
+
+#### Récupérez la clé d'abonnement de Cognitive Services
+
+{% collapsible %}
+
+```bash
+$CS_ACCOUNT_KEY = az cognitiveservices account keys list -g $RESOURCE_GROUP -n $CS_ACCOUNT_NAME --query key1 --output tsv
+```
+
+{% endcollapsible %}
+
+#### Ajoutez le nom de la ressource Cognitive Services et la clé d’abonnement aux secrets du coffre, puis enregistrez leur ID comme variables d’environnement pour l’étape suivante
+
+{% collapsible %}
+
+```bash
+$CS_NAME_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_name --value $CS_ACCOUNT_NAME --query id --output tsv
+$CS_KEY_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_key --value $CS_ACCOUNT_KEY --query id --output tsv
+```
+
+{% endcollapsible %}
+
+#### Enfin, définir les secrets sous la forme des paramètres d’application et les valeurs comme références  au keyVault
+
+{% collapsible %}
+
+```bash
+az webapp config appsettings set -g $RESOURCE_GROUP - $APP_NAME --settings CS_ACCOUNT_NAME="@Microsoft.KeyVault(SecretUri=$CS_NAME_KVUri)" CS_ACCOUNT_KEY="@Microsoft.KeyVault(SecretUri=$CS_KEY_KVUri)"
+```
+
+{% endcollapsible %}
+
+> Votre application se connecte maintenant à Cognitive Services avec des secrets conservés dans votre Key Vault, sans aucune modification du code.
