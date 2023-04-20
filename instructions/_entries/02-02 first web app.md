@@ -88,7 +88,7 @@ az webapp create -g $RESOURCE_GROUP -n $APP_NAME -p  $APP_SERVICE_PLAN -r "PHP:8
 > un nom de domaine unique sous la forme **AppName.azurewebsites.net** sera attribuée à la web app
 
 {% collapsible %}
-![App UI default](/media/lab1/php_app_quick.png)
+![App UI default](/media/lab1/php_quick_app.png)
 {% endcollapsible %}
 
 #### [Déployez](https://learn.microsoft.com/en-us/azure/app-service/scripts/cli-deploy-github) manuellement le code de l'application php depuis le repo Github
@@ -110,8 +110,8 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
 ```
 
 {% collapsible %}
-![App overview](/media/lab1/overview_php_app.png)
-![App UI default](/media/lab1/php_app_deploy.png)
+![App overview](/media/lab1/view_php_app.png)
+![App UI default](/media/lab1/app_deploy.png)
 {% endcollapsible %}
 
 #### Créez l'application web ASP.NET Core
