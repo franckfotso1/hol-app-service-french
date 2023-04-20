@@ -7,7 +7,7 @@ parent-id: lab-2
 
 Une fois le déploiement effectué, nous allons mettre à l'échelle l'application
 
-Il existe deux workflows de mise à l’échelle dans App Service : scale-up et scale-out
+Il existe deux types de mise à l’échelle dans App Service : le scale-up et le scale-out
 
 {% collapsible %}
 ![Web App connection string](/media/lab2/asp_scaling.png)
@@ -23,7 +23,7 @@ Il existe deux workflows de mise à l’échelle dans App Service : scale-up et 
 az appservice plan update --number-of-workers 3 --name $APP_SERVICE_PLAN --resource-group $RESOURCE_GROUP
 ```
 
-#### Pour un ASP de tier Basic, F1, etc < S1 l'autoscale est indisponible
+#### Pour un ASP de tier inférieur à S1, l'autoscale est indisponible
 
 {% collapsible %}
 ![no scale up](/media/lab2/scale_up_not_available.png)

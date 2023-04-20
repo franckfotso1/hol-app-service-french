@@ -33,7 +33,7 @@ npm start
 
 ```bash
 # Récupérez la 'chaîne de connexion' de votre base de données Mongo
-az cosmosdb keys list -g $RESOURCE_GROUP -n $COSMOSDB_ACCOUNT --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" -o tsv
+$primaryConnectionString = (az cosmosdb keys list -g $RESOURCE_GROUP -n $COSMOSDB_ACCOUNT --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" -o tsv)
 ```
 
 > Cette commande renverra un objet JSON contenant la chaîne de connexion de votre compte Cosmos DB. Copiez la valeur de la propriété **primaryConnectionString**
@@ -54,7 +54,7 @@ az webapp config appsettings set --name $APP_NAME `
 
 - via le Portail
 
-![Web App connection string](/media/lab2/app_settings.png)
+![Web App connection string](/media/lab2/app_setting.png)
 > Pensez à enregistrer les modifications
 
 {% endcollapsible %}
