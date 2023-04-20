@@ -54,7 +54,7 @@ az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --n
 
 {% collapsible %}
 
-![ASP tier ](/media/lab1/tier_app_service_plan.png)
+![ASP tier ](/media/lab1/tier_asp.png)
 
 {% endcollapsible %}
 
@@ -127,7 +127,7 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
 ![asp web app](/media/lab1/asp_web_app.png)
 {% endcollapsible %}
 
-- Dans Configurer votre nouveau projet, nommez l’application mydotnetapp, puis sélectionnez Suivant
+- Dans Configurer votre nouveau projet, nommez l’application app-dev-we-hol-ms-02, puis sélectionnez Suivant
   
 - Sélectionnez .NET Core 6.0 (prise en charge à long terme).
 {% collapsible %}
@@ -138,15 +138,15 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
   
 #### Publiez l'application sur le meme plan App Service Linux
 
-- cliquez avec le bouton droit sur le projet mydotnetapp, puis sélectionnez Publier.
+- cliquez avec le bouton droit sur le projet app-dev-we-hol-ms-02, puis sélectionnez Publier.
   
 {% collapsible %}
-![publish](/media/lab1/publish_asp.png)
+![publish](/media/lab1/asp_publish.png)
 {% endcollapsible %}
 
 - Dans Publier, sélectionnez Azure, puis Suivant
  {% collapsible %}
-![azure](/media/lab1/azure_asp.png)
+![azure](/media/lab1/asp_azure.png)
 {% endcollapsible %}
   
 - Choisissez la cible spécifique, Azure App Service (Linux)
@@ -155,7 +155,7 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
   
 - À droite d’Instances App Service, sélectionnez + et choisir le nom, l'ASP et le RG puis sélectionnez Créer
 {% collapsible %}
-![asp-deploy](/media/lab1/asp_app_deploy.png)
+![asp-deploy](/media/lab1/dotnet_app_deploy.png)
 {% endcollapsible %}
 
 - Dans la page Publier, sélectionnez Publier. Si vous voyez un message d’avertissement, sélectionnez Continuer.
@@ -169,11 +169,11 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
 - via CLI
 
 ```bash
-az webapp list -g $RESOURCE_GROUP -p $APP_SERVICE_PLAN --output table
+az webapp list -g $RESOURCE_GROUP --output table
 ```
 
 - via Portail
-  ![asp-deploy](/media/lab1/asp_list_app.png)
+  ![asp-deploy](/media/lab1/asp_list_apps.png)
 
 {% endcollapsible %}
 
