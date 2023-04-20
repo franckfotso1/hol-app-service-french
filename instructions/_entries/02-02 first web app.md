@@ -58,7 +58,7 @@ az appservice plan create -g $RESOURCE_GROUP -n $APP_SERVICE_PLAN --is-linux --n
 
 {% endcollapsible %}
 
-#### Lancer l'application php en local (optionel)
+#### Lancer l'application php en local (facultatif)
 
 ```bash
 # clonez le dépôt
