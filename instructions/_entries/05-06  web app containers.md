@@ -6,4 +6,4 @@ parent-id: lab-4
 ---
 
 
-- Coknkj
+- Remote debug, Kudu
