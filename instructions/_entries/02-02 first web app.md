@@ -14,7 +14,7 @@ parent-id: lab-1
 
 Examinons quelques paramètres dont vous avez besoin pour créer une application App Service :
 
-- **le nom** : le nom de l’application doit être unique globalement
+- **le nom** : le nom de l’application doit être globalement unique
 - **le format de publication** : App Service publie votre application sous forme de code ou conteneur Docker
 - **la pile d'exécution** : langage, version du SDK
 - **le système d’exploitation** : Linux ou Windows
@@ -110,10 +110,8 @@ az webapp show -n $APP_NAME -g $RESOURCE_GROUP --query "defaultHostName"
 ```
 
 {% collapsible %}
-
 ![App overview](/media/lab1/overview_php_app.png)
 ![App UI default](/media/lab1/php_app_deploy.png)
-
 {% endcollapsible %}
 
 #### Créez l'application web ASP.NET Core
