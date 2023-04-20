@@ -23,31 +23,21 @@ Il existe deux types de mise à l’échelle dans App Service : le scale-up et l
 az appservice plan update --number-of-workers 3 --name $APP_SERVICE_PLAN --resource-group $RESOURCE_GROUP
 ```
 
-#### Pour un ASP de tier inférieur à S1, l'autoscale est indisponible
-
-{% collapsible %}
-![no scale up](/media/lab2/scale_up_not_available.png)
-{% endcollapsible %}
-
 #### Mettez à jour le tier de l'ASP pour rendre disponible la fonctionnalité de mise à l'échelle automatique basé sur des règles (scale up)
 
 {% collapsible %}
-![scale up](/media/lab2/scale_up_asp.png)
+![scale up](/media/lab2/scale_up_aspp.png)
 {% endcollapsible %}
 
 #### Configurez un 'Rule Based autoscale'
-
-{% collapsible %}
-![Add a scale Rule](/media/lab2/custom_scale_out.png)
-{% endcollapsible %}
   
 > La règle utilise le pourcentage de CPU pour augmenter le nombre d'instances. Si en moyenne, sur une durée de 5 min, cette métrique > 10%, on incrémente de 1 ce nombre en limitant à 5.
 
 {% collapsible %}
-![Add a scale Rule](/media/lab2/scale_rule.png)
+![Add a scale Rule](/media/lab2/rule_based_autoscale.png)
 {% endcollapsible %}
 
-- Utilisez Azure PowerShell pour démarrer une boucle infinie qui envoie les requêtes HTTP à votre application Web.
+- Utilisez Azure CLI pour démarrer une boucle infinie qui envoie les requêtes HTTP à votre application Web.
   
 ```bash
 $webapp= az webapp show --name $APP_NAME --resource-group $RESOURCE_GROUP --query defaultHostName -o tsv
