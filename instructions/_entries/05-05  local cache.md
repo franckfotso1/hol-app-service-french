@@ -12,7 +12,7 @@ Certaines applications ont uniquement besoin d’un magasin de contenu en lectur
 
 #### Activez le cache local dans votre web App
 
-> La taille des deux dossiers pour chaque application est limitée à 1 Go par défaut, mais vous pouvez l’augmenter à 2 Go
+> La taille du cache reservé pour chaque application est limitée à 1 Go par défaut, mais vous pouvez l’augmenter à 2 Go
 
 {% collapsible %}
 ![local cache](/media/lab3/local_cache.png)

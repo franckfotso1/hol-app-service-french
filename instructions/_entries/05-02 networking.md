@@ -45,7 +45,7 @@ az webapp vnet-integration add -g $RESOURCE_GROUP --name $APP_NAME --vnet $VNET_
 #### Configurez l'accès à votre base de données Cosmos DB depuis le Vnet
 
 {% collapsible %}
-![cosmos vnet integration](/media/lab3/vnet_integration.png)
+![cosmos vnet integration](/media/lab3/cosmos_vnet_integration.png)
 {% endcollapsible %}
 
 > Vous ne pouvez plus charger l’application, vous recevez une erreur HTTP 500. L’application a perdu sa connectivité à la ressource Cosmos DB. Pour rétablir la connexion en passant par le Vnet, il faut activer le service endpoint.
