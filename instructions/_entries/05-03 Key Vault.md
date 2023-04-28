@@ -47,7 +47,7 @@ az webapp identity assign -g $RESOURCE_GROUP -n $APP_NAME --scope $VAULT_ID --ro
 {% collapsible %}
 
 ```bash
-$CS_ACCOUNT_KEY = az cognitiveservices account keys list -g $RESOURCE_GROUP -n $CS_ACCOUNT_NAME --query key1 --output tsv
+$COSMOSDB_KEY = az cosmosdb keys list --name $COSMOSDB_ACCOUNT --resource-group $RESOURCE_GROUP --type connection-strings --query connectionStrings[0].connectionString --output tsv
 ```
 
 {% endcollapsible %}
@@ -57,8 +57,8 @@ $CS_ACCOUNT_KEY = az cognitiveservices account keys list -g $RESOURCE_GROUP -n $
 {% collapsible %}
 
 ```bash
-$CS_NAME_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_name --value $CS_ACCOUNT_NAME --query id --output tsv
-$CS_KEY_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_key --value $CS_ACCOUNT_KEY --query id --output tsv
+$CS_NAME_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_name --value $DATABASE_NAME --query id --output tsv
+$CS_KEY_KVUri = az keyvault secret set --vault-name $VAULT_NAME --name cs_key --value $COSMOSDB_KEY --query id --output tsv
 ```
 
 {% endcollapsible %}

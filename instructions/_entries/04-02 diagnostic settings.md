@@ -16,7 +16,7 @@ Cette fonctionnalité est particulièrement utile quand vous rencontrez des prob
 
 - La zone de recherche Genie permet de rapidement trouver un diagnostic. Par exemple si mon application est lent, je cherche **"Web App Slow"**. Le même diagnostic est disponible dans les catégories Availability & Performance.
   
-![Ask Genie](/media/lab3/ask_genie.png)
+![Ask Genie](/media/lab3/ask_genie_0.png)
 ![Ask Genie diagnostic](/media/lab3/genie_diagnostic.png)
 
 - On dispose aussi d'un Bot sous l'option **Ask Genie** pour soumettre nos problèmes, et ce dernier nous fournit des recommandations
