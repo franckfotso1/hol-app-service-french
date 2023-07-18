@@ -50,7 +50,7 @@ az webapp vnet-integration add -g $RESOURCE_GROUP --name $APP_NAME --vnet $VNET_
 
 > Vous ne pouvez plus charger l’application, vous recevez une erreur HTTP 500. L’application a perdu sa connectivité à la ressource Cosmos DB. Pour rétablir la connexion en passant par le Vnet, il faut activer le service endpoint.
 
-#### Ajoutez le service enpoint Microsoft.Azure.Cosmos DB à votre subnet
+#### Ajoutez le service enpoint Microsoft.Azure.CosmosDB à votre subnet
 
 {% collapsible %}
 ![service endpoint](/media/lab3/service_endpoint.png)
