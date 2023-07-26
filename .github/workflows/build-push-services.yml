@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - master
-name:  update staging guide
+name:  update production guide
 
 jobs:
 
